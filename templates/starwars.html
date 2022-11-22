@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Star Wars API
+{% endblock %}
+
+
+{% block content %}
+<h1>Star Wars Character Facts</h1>
+<form action="/starwars" method="GET">
+    <fieldset>
+        <legend>Star Wars Characters</legend>
+        <label>
+            Choose a character to get facts about them:
+            <select name="character_id">
+                <option value='--'>--</option>
+                {% for id, character in character_list.items() %}
+                    <option value="{{id}}">{{character}}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <input type="submit" value="Get Fact!">
+    </fieldset>
+</form>
+
+
+<section id="form_results">
+    <h2>
+        Facts about your Star Wars Character:
+    </h2>
+    <section>
+        {% if character_object %}
+          <h3>Name:</h3> 
+          <p>{{character_object.name}}</p>
+          <h3>Height:</h3>
+          <p>{{character_object.height}} cm</p>
+          <h3>Mass in Kg:</h3>
+          <p>{{character_object.mass}} kg</p>
+          <h3>Hair color:</h3>
+          <p>{{character_object.hair_color}}</p>
+          <h3>Eye color:</h3>
+          <p>{{character_object.eye_color}}</p>
+          <h3>Appears in the following films:</h3>
+          <ul>
+            {% for film in film_list %}
+              <li>{{film}}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+    
+        {% if error %}
+          <h2>{{error}}</h2>
+        {% endif %}
+    </section>
+</section>
+
+{% endblock %}
